@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search Users
+{% endblock %}
+
+{% block main %}
+<script>
+    $(document).ready(function(){
+  $("#tableSearch").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<div class="container">
+{% if message %}
+   <div style="margin:auto" class="alert alert-success" id="alert" role="alert">{{ message }}</div>
+   <br>
+{% endif %}
+  <input style="margin:auto" class="form-control" id="tableSearch" type="text" placeholder="Search username">
+  <br>
+    <table id="tble" style="width:350px; display:block; max-height: 300px; overflow-y: scroll; margin:auto;" class="table table-striped">
+  <thead>
+    <tr>
+        <th scope="col">Username</th>
+        <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>
+              <form method="post">
+              <input type="hidden" value="{{ user.username }}" name="friend_id">
+                  {% if user in people %}
+                    <button type="submit" style="width:auto; height:auto" class="btn btn-primary" name="add_friend" value="Add Friend">Add Friend</button>
+                  {% else %}
+                    {% if user.username == username %}
+                    {% else %}
+                      <button type="submit" style="width:auto; height:auto" class="btn btn-success" name="add_friend" value="Added" disabled>Friends</button>
+                    {% endif %}
+                  {% endif %}
+              </form>
+          </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

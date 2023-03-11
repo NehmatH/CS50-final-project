@@ -1,0 +1,103 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    New Event
+{% endblock %}
+
+{% block main %}
+<script>
+  $(function(){
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var maxDate = year + '-' + month + '-' + day;
+    $('#txtDate').attr('min', maxDate);
+    $('#txtDate1').attr('min', maxDate);
+    $('#txtDate2').attr('min', maxDate);
+});
+</script>
+<div class="container">
+<form action="/new" method="post">
+{% if message %}
+  <div class="alert alert-success" id="alert" role="alert">{{ message }}</div>
+{% endif %}
+{% if message1 %}
+  <div class="alert alert-warning" id="alert" role="alert">{{ message1 }}</div>
+{% endif %}
+  <div class="form-group row">
+    <label for="title" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" placeholder="Title" name="title1" required>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="location" class="col-sm-2 col-form-label">Location</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" placeholder="Location" name="location" required>
+    </div>
+  </div>
+<div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">Day</label>
+    <div class="col-sm-10">
+      <input id="txtDate" style="width:auto" class="form-control" type="date" name="option1" required>
+    </div>
+</div>
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Starts at</label>
+    <div class="col-sm-10">
+      <input type="time" class="form-control" name="start" required>
+    </div>
+</div>
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label">Ends at</label>
+  <div class="col-sm-10">
+    <input type="time" class="form-control" name="end" required>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label">Notes</label>
+  <div class="col-sm-10">
+    <textarea class="form-control" name="notes" placeholder="Notes"></textarea>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-sm-2 col-form-label">Participants</label>
+  <div class="col-sm-10">
+    <div class="form-check">
+      <div class="form-check">
+      <input class="form-check-input check1" type="checkbox" value="{{ username }}" id="admin" checked disabled>
+      <label class="form-check-label" for="defaultCheck1" >{{ username }}</label>
+      </div>
+      {% for person in accepts %}
+      <div class="form-check">
+          <input class="form-check-input check1" type="checkbox" value="{{ person.accept }}" name="partss">
+          <label class="form-check-label" for="defaultCheck1">{{ person.accept }}</label>
+      </div>
+      {% endfor %}
+      {% for user in users %}
+      <div class="form-check">
+          {% if user.username == username %}
+          {% else %}
+          <input class="form-check-input check1" type="checkbox" value="{{ user.username }}" name="partss">
+          <label class="form-check-label" for="defaultCheck1">{{ user.username }}</label>
+          {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div class="form-group row">
+  <div class="col-sm-10">
+    <button id="create" type="submit" class="btn btn-primary">Create Event</button>
+  </div>
+</div>
+</form>
+</div>
+{% endblock %}

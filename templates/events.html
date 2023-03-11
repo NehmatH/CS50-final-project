@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+{% if eachevent %}
+<div class="container">
+<div class="row-cols-1 row-cols-md-2">
+  {% for event in eachevent %}
+  <div class="col" style="margin:auto">
+  <div class="card cards h-100 bg-light">
+    <div class="card-body">
+      <h5 class="card-title" style="color: #6BC0E8"><strong>{{ event.title }}</strong></h5>
+      <p class="card-text"><b>Location</b> : {{ event.location }}</p>
+      <p><b>Date</b> : {{ event.date1 }}</p>
+      <p><b>Starts at</b> : {{ event.start }} <b>and ends at</b> : {{ event.end }}</p>
+      <p><b>Participants</b> : {{ event.participants }}</p>
+      {% if event.notes %}
+      <p><b>Notes</b> : {{ event.notes }}</p>
+      {% endif %}
+      <form method="post">
+      {% if event.username == username %}
+      <button type="button" value="{{ event.event_id }}" data-toggle="modal" data-target="#exampleModal{{ event.event_id }}" class="btn btn-primary" style="width:auto">Add participants</button>
+      <div class="modal fade" id="exampleModal{{ event.event_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Participants</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            {% for friend in friends %}
+              {% if friend not in event.participants %}
+              <p style="padding-left:30px">
+                <input class="form-check-input check1" type="checkbox" value="{{ friend }}" name="addone">
+                <label class="form-check-label" for="defaultCheck1" >{{ friend }}</label>
+              </p>
+              {% endif %}
+            {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <button value="{{ event.event_id }}" name="add" type="submit"  class="btn btn-secondary">Add participant(s)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" value="{{ event.event_id }}" data-toggle="modal" data-target="#exampleModal1{{ event.event_id }}" class="btn btn-primary" style="width:auto">Remove participants</button>
+      <div class="modal fade" id="exampleModal1{{ event.event_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Remove Participants</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+            {% for friend in friends %}
+              {% if friend in event.participants %}
+              <p style="padding-left:30px">
+                <input class="form-check-input check1" type="checkbox" value="{{ friend }}" name="removeone">
+                <label class="form-check-label" for="defaultCheck1" >{{ friend }}</label>
+              </p>
+              {% endif %}
+            {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              <button value="{{ event.event_id }}" name="remove" type="submit"  class="btn btn-secondary">Remove participant(s)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" value="{{ event.event_id }}" name="deleteevent" class="btn btn-danger" style=" background-color:#6BC0E8; width:auto">Delete event</button>
+      {% else %}
+      <button type="submit" value="{{ event.event_id }}" name="leave" class="btn btn-primary" style="width:auto">Leave event</button>
+      {% endif %}
+      </form>
+    </div>
+    <div class="card-footer">
+      <small class="text-muted">Created by {{ event.username }} on {{ event.days }}</small>
+    </div>
+  </div>
+  </div>
+  {% endfor %}
+</div>
+</div>
+{% else %}
+<div>You don't have any events currently. <a style="color:black; font-weight:700" href="/new">Create a new one</a> now!</div>
+{% endif %}
+{% endblock %}

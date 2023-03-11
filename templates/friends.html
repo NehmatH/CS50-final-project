@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    My Friends
+{% endblock %}
+
+{% block main %}
+<div class="container">
+{% if message %}
+   <div class="alert alert-success" id="alert" role="alert">{{ message }}</div>
+{% endif %}
+<details>
+  <summary class="">My Friends</summary>
+  <br>
+<table class="try">
+    {% for person in accepts %}
+    <form id="form-id" action="/remove" method="post">
+    <input type="hidden" value="{{ person.accept }}" name="dele">
+    <tr>
+        <td><p>{{ person.accept }}</p></td>
+        <td><button class="btn btn-primary" style="width:auto" value="Remove Friend" type="submit">Remove Friend</button></td>
+    </tr>
+    </form>
+    {% endfor %}
+    {% for user in users %}
+    <form id="form-id1" action="/remove" method="post">
+        {% if user.username == username %}
+        {% else %}
+        <input type="hidden" value="{{ user.username }}" name="dele">
+        <tr>
+            <td><p>{{ user.username }}</p></td>
+            <td><button class="btn btn-primary" style="width:auto" value="Remove Friend" type="submit">Remove Friend</button></td>
+        </tr>
+    {% endif %}
+    </form>
+    {% endfor %}
+    <ul>
+    {% if message2 %}
+       <div>{{ message2 }}</div>
+    {% endif %}
+    </ul>
+</table>
+<div id="frnd"></div>
+</details>
+<br>
+<details>
+  <summary class="">Friend Requests</summary>
+<br>
+<ul>
+    {% for friend in friends %}
+        <li>
+            <form action="/friends" method="post">
+            <input type="hidden" value="{{ friend.request }}" name="userr">
+            <p>{{ friend.request }} sent you a friend request.</p>
+            <br>
+            <button type="submit" style="width:auto; height:auto" class="btn btn-success" name="accept" value="accept">Accept</button>
+            <button type="submit" style="width:auto; height:auto" class="btn btn-dark" name="decline" value="decline">Decline</button>
+            </form>
+        </li>
+        <br>
+    {% endfor %}
+    {% if message1 %}
+       <div>{{ message1 }}</div>
+    {% endif %}
+</ul>
+</details>
+ </div>
+{% endblock %}
+
+{% block friends %}
+
+{% endblock %}

@@ -1,0 +1,249 @@
+<link href="https://fonts.googleapis.com/css?family=Raleway:200,100,400" rel="stylesheet" type="text/css" />
+{% extends "layout.html" %}
+
+{% block title %}
+    The Easiest Way To Make Plans With Your Friends
+{% endblock %}
+
+{% block main %}
+<script>
+	var TxtRotate = function(el, toRotate, period) {
+  this.toRotate = toRotate;
+  this.el = el;
+  this.loopNum = 0;
+  this.period = parseInt(period, 10) || 2000;
+  this.txt = '';
+  this.tick();
+  this.isDeleting = false;
+};
+
+TxtRotate.prototype.tick = function() {
+  var i = this.loopNum % this.toRotate.length;
+  var fullTxt = this.toRotate[i];
+
+  if (this.isDeleting) {
+    this.txt = fullTxt.substring(0, this.txt.length - 1);
+  } else {
+    this.txt = fullTxt.substring(0, this.txt.length + 1);
+  }
+
+  this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+  var that = this;
+  var delta = 300 - Math.random() * 100;
+
+  if (this.isDeleting) { delta /= 2; }
+
+  if (!this.isDeleting && this.txt === fullTxt) {
+    delta = this.period;
+    this.isDeleting = true;
+  } else if (this.isDeleting && this.txt === '') {
+    this.isDeleting = false;
+    this.loopNum++;
+    delta = 500;
+  }
+
+  setTimeout(function() {
+    that.tick();
+  }, delta);
+};
+
+window.onload = function() {
+  var elements = document.getElementsByClassName('txt-rotate');
+  for (var i=0; i<elements.length; i++) {
+    var toRotate = elements[i].getAttribute('data-rotate');
+    var period = elements[i].getAttribute('data-period');
+    if (toRotate) {
+      new TxtRotate(elements[i], JSON.parse(toRotate), period);
+    }
+  }
+  // INJECT CSS
+  var css = document.createElement("style");
+  css.type = "text/css";
+  css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+  document.body.appendChild(css);
+};
+</script>
+<div name="top" class="container" style="padding-bottom:200px">
+    <div class="text">
+		<h1 class="mb-2 " style="padding-left: 25px">Making Plans Has Never Been This <span
+     class="txt-rotate"
+     data-period="2000"
+     data-rotate='[ "Easy!", "Simple!", "Fast!", "Fun!", "Quick!"]'></span></h1>
+		<p style="padding-left: 20px">Let's Meet allows you to make plans, host events, arrange a get-together and so much more!</p>
+		<p class="mb-0"><a href="/register" style="width:200px" class="btn btn-primary py-md-3 py-2 px-2 px-md-4">Get Started</a></p>
+	</div>
+</div>
+<button id="btn"><a href="#top"><svg id="arr" width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+</svg></a></button>
+{% endblock %}
+
+{% block second %}
+<div class="container"  style="padding-top:100px; padding-bottom:100px">
+	<div class="row">
+		<div class="col-lg-6">
+			<img src="https://imgix.elitedaily.com/uploads/shutterstock/2020/8/21/56208a3b-2389-4011-aab0-a29dcff72e04-shutterstock-1739492873.jpg?w=610&fit=max&auto=format%2Ccompress&cs=srgb&q=70" height="auto" width="475px" style="padding-top:25px">
+		</div>
+		<div class="col-lg-6">
+			<div >
+				<h1 class="mb-2" style=" color:#91B3D6">Let's Meet</h1>
+				<p>There's nothing better than hanging out with your friends, yet planning it is always such a hassle.
+					From choosing a location, a date and a time that fit every invitees schedule, to making sure the selections satisfy everyone's taste,
+					 coordinating such events can take lots of time and effort, especially if someone decides to drop out at the last minute.</p>
+				<p>
+					Well, all of that can be solved with Let's Meet. With Let's Meet, you now can:
+					<ul>
+						<li>Send friend requests to your friends and add them to your friends list once they accept your request.</li>
+						<li>Create new events and invite your friends.</li>
+						<li>Once you're a participant in an event, stay if you want to go or leave the event if you don't.</li>
+					</ul>
+				</p>
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endblock %}
+
+{% block third %}
+<div class="container" style="padding-top:100px; padding-bottom:100px;">
+<h1 class="text" style="color:white">HOW THE WEBSITE WORKS</h1>
+</div>
+{% endblock %}
+
+{% block fourth %}
+<div class="container" style="padding-top:100px; padding-bottom:100px">
+	<div class="row" style="margin:auto">
+  <div class="col-sm-4 mb-4">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header" style="padding-top:20px"><h5>1. Search and Add Friends</h5></div>
+  <div class="card-body">
+  	<div class="media">
+  		<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="align-self-start mr-3 bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+  <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+</svg>
+  <div class="media-body">
+    <p>Search users and send friend requests to your friends.</p>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+  <div class="col-sm-4 mb-4">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header" style="padding-top:20px"><h5>2. Pick Name and Location</h5></div>
+  <div class="card-body">
+  	<div class="media">
+  		<svg width="1.5em" height="1.5em"viewBox="0 0 16 16" class="align-self-start mr-3 bi bi-map" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+	  <path fill-rule="evenodd" d="M15.817.113A.5.5 0 0 1 16 .5v14a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 15.01l-4.902.98A.5.5 0 0 1 0 15.5v-14a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0L10.5.99l4.902-.98a.5.5 0 0 1 .415.103zM10 1.91l-4-.8v12.98l4 .8V1.91zm1 12.98l4-.8V1.11l-4 .8v12.98zm-6-.8V1.11l-4 .8v12.98l4-.8z"/>
+	</svg>
+  <div class="media-body">
+    <p>Name your event and choose a location.</p>
+  </div>
+</div>
+  </div>
+</div>
+  </div>
+  <div class="col-sm-4 mb-4">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header" style="padding-top:20px"><h5>3. Pick Date and Time</h5></div>
+  <div class="card-body">
+   	<div class="media">
+  		<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="align-self-start mr-3 bi bi-calendar-event" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+  <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+</svg>
+	  <div class="media-body">
+	    <p>Choose a date, a start and an end time.</p>
+	  </div>
+	</div>
+  </div>
+</div>
+  </div>
+</div>
+<div class="row" style="margin:auto">
+  <div class="col-sm-4 mb-4">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header" style="padding-top:20px"><h5>4. Pick Participants</h5></div>
+  <div class="card-body">
+    <div class="media">
+  		<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="align-self-start mr-3 bi bi-people" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.995-.944v-.002.002zM7.022 13h7.956a.274.274 0 0 0 .014-.002l.008-.002c-.002-.264-.167-1.03-.76-1.72C13.688 10.629 12.718 10 11 10c-1.717 0-2.687.63-3.24 1.276-.593.69-.759 1.457-.76 1.72a1.05 1.05 0 0 0 .022.004zm7.973.056v-.002.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10c-1.668.02-2.615.64-3.16 1.276C1.163 11.97 1 12.739 1 13h3c0-1.045.323-2.086.92-3zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+</svg>
+	  <div class="media-body">
+	    <p>Choose participants from your friends list to invite to your event.</p>
+	  </div>
+	</div>
+</div>
+</div>
+  </div>
+  <div class="col-sm-4 mb-4">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header" style="padding-top:20px"><h5>5. Create Event</h5></div>
+  <div class="card-body">
+    <div class="media">
+  		<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="align-self-start mr-3 bi bi-calendar-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		  <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+		  <path fill-rule="evenodd" d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
+		  <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
+		</svg>
+		<div class="media-body">
+	    <p>And that's it! You can now check your event in the "My Events" page.</p>
+	  </div>
+	</div>
+</div>
+</div>
+  </div>
+  <div class="col-sm-4 mb-4">
+    <div class="card bg-light mb-3" style="max-width: 18rem;">
+  <div class="card-header" style="padding-top:20px"><h5>6. Edit event</h5></div>
+  <div class="card-body">
+    <div class="media">
+  		<svg width="1.5em" height="1.5em" viewBox="0 0 16 16" class="align-self-start mr-3 bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+		  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+		  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+		</svg>
+		<div class="media-body">
+	    <p>You can add and remove participants or even delete the event.</p>
+	  </div>
+	</div>
+</div>
+</div>
+  </div>
+</div>
+<br><br>
+<div class="row" style="margin:auto">
+	<div style=" margin:auto">
+		<a href="/register" style="width:200px;" class="btn btn-primary py-md-3 py-2 px-2 px-md-4">Register now</a>
+	</div>
+</div>
+</div>
+{% endblock %}
+
+{% block fifth %}
+<div class="container" style="padding-top:100px; padding-bottom:100px;">
+<h1 class="text" style="color:white">About Us</h1>
+</div>
+{% endblock %}
+
+{% block sixth %}
+<div class="container" style="padding-top:100px; padding-bottom:100px;">
+	<h1 class="text" style="padding-bottom:50px; color:#91B3D6">Our mission</h1>
+	<div class="container" style="font-size:20px">
+		<p style="font-weight:500">At Let's Meet, we believe there is a better way to planning meetings and events. A more user-friendly, less complicated way where users solve one of their most common problem the easiest way possible. This is why we work everyday in order to provide you with the fastest, simplest and most effective methods that allow you to make your plans comfortably.</p>
+		<p style="font-weight:500">One of the inspirations that led to the production of this website is always having trouble planning a meeting, where the location, date and time are compatible with every invitees schedule. Knowing that this task takes lots of efforts and requires constant communication with all the invitees, we worked at Let's Meet to find a way that reduces all the trouble and allows users to plan the event the easiest way possible.</p>
+	</div>
+	<h1 class="text" style="padding-top:50px; padding-bottom:50px; color:#91B3D6">Our founding</h1>
+	<div class="container" style="font-size:20px">
+		<p style="font-weight:500">Let's Meet is a free and secure website created and designed by Nehmat Hatoum, a senior from Beirut, Lebanon. The website was founded in August 2020 as a final project for the online Harvard course, Introduction to Computer Science, widely known as CS50.</p>
+	</div>
+</div>
+<div class="row" style="margin:auto">
+	<div style=" margin:auto; padding-bottom:100px">
+		<a href="/register" style="width:200px;" class="btn btn-primary py-md-3 py-2 px-2 px-md-4">Register now</a>
+	</div>
+</div>
+
+{% endblock %}
